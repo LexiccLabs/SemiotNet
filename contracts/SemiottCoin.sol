@@ -1,10 +1,13 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
+import "./ReentrancyGuard.sol";
+import "./Initializable.sol";
 import "./SafeMath.sol";
-import "./BismuthToken.sol";
-import "./BismuthVelocityVerifier.sol";
+import "./Verifier.sol";
+
 
 /**
  * @title BBismuthCoin
@@ -18,7 +21,7 @@ import "./BismuthVelocityVerifier.sol";
  * Any call to transfer against this contract should fail
  * with insufficient funds since no tokens will be issued there.
  */
-contract BismuthCoin {
+contract BismuthCoin is Initializable, ReentrancyGuard  {
 
 
     using SafeMath for uint256;
@@ -223,7 +226,7 @@ contract BismuthCoin {
     /**
      * @dev Throws if called by any account other than the owner.
      */
-    modifier onlyOwner() {
+    modifier  onlyOwner() {
         require(msg.sender == owner, "onlyOwner");
         _;
     }
