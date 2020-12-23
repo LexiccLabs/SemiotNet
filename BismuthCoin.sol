@@ -1,10 +1,12 @@
-pragma solidity ^0.5.17;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.6.0 <0.8.0;
 
 import "./SafeMath.sol";
 
 
 /**
- * @title BismuthCoin
+ * @title BBismuthCoin
  * @dev this contract is a Pausable ERC20 token with Burn and Mint
  * controleld by a central SupplyController. By implementing BCC StablecoinImplementation
  * this contract also includes external methods for setting
@@ -17,15 +19,9 @@ import "./SafeMath.sol";
  */
 contract BismuthCoin {
 
-    /**
-     * MATH
-     */
 
     using SafeMath for uint256;
 
-    /**
-     * DATA
-     */
 
     // INITIALIZATION DATA
     bool private initialized = false;
@@ -348,11 +344,7 @@ contract BismuthCoin {
         _;
     }
 
-    /**
-     * @dev Increases the total supply by minting the specified number of tokens to the supply controller account.
-     * @param _value The number of tokens to add.
-     * @return A boolean that indicates if the operation was successful.
-     */
+
     function increaseSupply(uint256 _value) public onlySupplyController returns (bool success) {
         totalSupply_ = totalSupply_.add(_value);
         balances[supplyController] = balances[supplyController].add(_value);
@@ -361,11 +353,7 @@ contract BismuthCoin {
         return true;
     }
 
-    /**
-     * @dev Decreases the total supply by burning the specified number of tokens from the supply controller account.
-     * @param _value The number of tokens to remove.
-     * @return A boolean that indicates if the operation was successful.
-     */
+
     function decreaseSupply(uint256 _value) public onlySupplyController returns (bool success) {
         require(_value <= balances[supplyController], "not enough supply");
         balances[supplyController] = balances[supplyController].sub(_value);
@@ -374,4 +362,5 @@ contract BismuthCoin {
         emit Transfer(supplyController, address(0), _value);
         return true;
     }
+    
 }
