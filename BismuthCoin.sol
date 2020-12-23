@@ -1,240 +1,377 @@
-pragma solidity ^0.5.0;
+pragma solidity ^0.5.17;
 
-import "./@openzeppelin/contracts/access/Roles.sol";
-import "./@openzeppelin/contracts/token/ERC20/ERC20Fee.sol";
+import "./SafeMath.sol";
 
-contract BismuthCoin is ERC20Fee {
-    using Roles for Roles.Role;
 
-    Roles.Role private _minters;
-    Roles.Role private _burners;
-
-    /**
-     * @dev Emitted when account get access to {MinterRole}
-     */
-    event MinterAdded(address indexed account);
-
-    /**
-     * @dev Emitted when account get access to {BurnerRole}
-     */
-    event BurnerAdded(address indexed account);
+/**
+ * @title BBismuthCoin
+ * @dev this contract is a Pausable ERC20 token with Burn and Mint
+ * controleld by a central SupplyController. By implementing BCC StablecoinImplementation
+ * this contract also includes external methods for setting
+ * a new implementation contract for the Proxy.
+ * NOTE: The storage defined here will actually be held in the Proxy
+ * contract and all calls to this contract should be made through
+ * the proxy, including admin actions done as owner or supplyController.
+ * Any call to transfer against this contract should fail
+ * with insufficient funds since no tokens will be issued there.
+ */
+contract BismuthCoin {
 
     /**
-     * @dev Emitted when an account loses access to the {MinterRole}
+     * MATH
      */
-    event MinterRemoved(address indexed account);
+
+    using SafeMath for uint256;
 
     /**
-     * @dev Emitted when an account loses access to the {BurnerRole}
+     * DATA
      */
-    event BurnerRemoved(address indexed account);
+
+    // INITIALIZATION DATA
+    bool private initialized = false;
+
+    // ERC20 BASIC DATA
+    mapping(address => uint256) internal balances;
+    uint256 internal totalSupply_;
+    string public constant name = "BCC"; // solium-disable-line uppercase
+    string public constant symbol = "BCC"; // solium-disable-line uppercase
+    uint8 public constant decimals = 18; // solium-disable-line uppercase
+
+    // ERC20 DATA
+    mapping (address => mapping (address => uint256)) internal allowed;
+
+    // OWNER DATA
+    address public owner;
+
+    // PAUSABILITY DATA
+    bool public paused = false;
+
+    // AGGREGATOR DATA
+    address public coinVelocityVerifier;
+    mapping(address => bool) internal frozen;
+
+    // SUPPLY CONTROL DATA
+    address public supplyController;
 
     /**
-     * @dev Throws if caller does not have the {MinterRole}
+     * EVENTS
      */
-    modifier onlyMinter() {
-        require(
-            isMinter(_msgSender()),
-            "MinterRole: caller does not have the Minter role"
-        );
-        _;
+
+    // ERC20 BASIC EVENTS
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    // ERC20 EVENTS
+    event Approval(
+        address indexed owner,
+        address indexed spender,
+        uint256 value
+    );
+
+    // OWNABLE EVENTS
+    event OwnershipTransferred(
+        address indexed oldOwner,
+        address indexed newOwner
+    );
+
+    // PAUSABLE EVENTS
+    event Pause();
+    event Unpause();
+
+    // LAW ENFORCEMENT EVENTS
+    event AddressFrozen(address indexed addr);
+    event AddressUnfrozen(address indexed addr);
+    event FrozenAddressWiped(address indexed addr);
+    event coinVeolocityVerifierSet (
+        address indexed oldCoinVelocityVerifier,
+        address indexed newCoinVelocityVerifier
+    );
+
+    // SUPPLY CONTROL EVENTS
+    event SupplyIncreased(address indexed to, uint256 value);
+    event SupplyDecreased(address indexed from, uint256 value);
+    event SupplyControllerSet(
+        address indexed oldSupplyController,
+        address indexed newSupplyController
+    );
+
+    /**
+     * FUNCTIONALITY
+     */
+
+    // INITIALIZATION FUNCTIONALITY
+
+    /**
+     * @dev sets 0 initials tokens, the owner, and the supplyController.
+     * this serves as the constructor for the proxy but compiles to the
+     * memory model of the Implementation contract.
+     */
+    function initialize() public {
+        require(!initialized, "already initialized");
+        owner = msg.sender;
+        coinVelocityVerifier = address(0);
+        totalSupply_ = 0;
+        supplyController = msg.sender;
+        initialized = true;
     }
 
     /**
-     * @dev Throws if caller does not have the {BurnerRole}
+     * The constructor is used here to ensure that the implementation
+     * contract is initialized. An uncontrolled implementation
+     * contract might lead to misleading state
+     * for users who accidentally interact with it.
      */
-    modifier onlyBurner() {
-        require(
-            isBurner(_msgSender()),
-            "BurnerRole: caller does not have the Burner role"
-        );
-        _;
+    constructor() public {
+        initialize();
+        pause();
+    }
+
+    // ERC20 BASIC FUNCTIONALITY
+
+    /**
+    * @dev Total number of tokens in existence
+    */
+    function totalSupply() public view returns (uint256) {
+        return totalSupply_;
     }
 
     /**
-     * @dev Sets the values for `name`, `symbol`, `decimals`
-     * and gives owner {MinterRole} and {BurnerRole}
-     * @param name The name of the token
-     * @param symbol The symbol of the token 
-     * @param decimals The number of decimals the token uses
-     * @notice `name`, `symbol` and `decimals`
-     * values are immutable: they can only be set once during construction
-     */
-    constructor(string memory name, string memory symbol, uint8 decimals)
-        public
-        ERC20Fee(name, symbol, decimals)
-    {
-        _addMinter(_msgSender());
-        _addBurner(_msgSender());
-    }
+    * @dev Transfer token for a specified address
+    * @param _to The address to transfer to.
+    * @param _value The amount to be transferred.
+    */
+    function transfer(address _to, uint256 _value) public whenNotPaused returns (bool) {
+        require(_to != address(0), "cannot transfer to address zero");
+        require(!frozen[_to] && !frozen[msg.sender], "address frozen");
+        require(_value <= balances[msg.sender], "insufficient funds");
 
-    /**
-     * @dev Give an account access to {MinterRole}
-     * @param account Account address
-     */
-    function addMinter(address account) external onlyOwner {
-        _addMinter(account);
-    }
-
-    /**
-     * @dev Give an account access to {BurnerRole}
-     * @param account Account address
-     */
-    function addBurner(address account) external onlyOwner {
-        _addBurner(account);
-    }
-
-    /**
-    /**
-     * @dev Remove an account's access to {MinterRole}
-     * @param account Account address
-     */
-    function renounceMinter(address account) external onlyOwner {
-        _removeMinter(account);
-    }
-
-    /**
-     * @dev Remove an account's access to {BurnerRole}
-     * @param account Account address
-     */
-    function renounceBurner(address account) external onlyOwner {
-        _removeBurner(account);
-    }
-
-    /**
-     * @dev Check if an account has {MinterRole}
-     * @param account Account address
-     * @return bool
-     */
-    function isMinter(address account) public view returns (bool) {
-        return _minters.has(account);
-    }
-
-    /**
-     * @dev Check if an account has {BurnerRole}
-     * @param account Account address
-     * @return bool
-     */
-    function isBurner(address account) public view returns (bool) {
-        return _burners.has(account);
-    }
-
-    /**
-     * @dev Mint `amount` of tokens `to` recipient. See {ERC20-_mint}
-     * @param to Account address of recipient
-     * @param amount Amount to mint
-     * @notice Requirements:
-     * the caller must have the {MinterRole}
-     * @return bool
-     */
-    function mint(address to, uint256 amount)
-        external
-        onlyMinter
-        returns (bool)
-    {
-        _mint(to, amount);
+        balances[msg.sender] = balances[msg.sender].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+        emit Transfer(msg.sender, _to, _value);
         return true;
     }
 
     /**
-     * @dev Destroys `amount` of tokens from the caller. See {ERC20-_mint}
-     * @param amount Amount to burn
-     * @notice Requirements:
-     * the caller must have the {BurnerRole}
-     * @return bool
+    * @dev Gets the balance of the specified address.
+    * @param _addr The address to query the the balance of.
+    * @return An uint256 representing the amount owned by the passed address.
+    */
+    function balanceOf(address _addr) public view returns (uint256) {
+        return balances[_addr];
+    }
+
+    // ERC20 FUNCTIONALITY
+
+    /**
+     * @dev Transfer tokens from one address to another
+     * @param _from address The address which you want to send tokens from
+     * @param _to address The address which you want to transfer to
+     * @param _value uint256 the amount of tokens to be transferred
      */
-    function burn(uint256 amount) external onlyBurner returns (bool) {
-        _burn(_msgSender(), amount);
-    }
-
-    // Internal functions
-    function _addMinter(address account) internal {
-        _minters.add(account);
-        emit MinterAdded(account);
-    }
-
-    function _addBurner(address account) internal {
-        _burners.add(account);
-        emit BurnerAdded(account);
-    }
-
-    function _removeMinter(address account) internal {
-        _minters.remove(account);
-        emit MinterRemoved(account);
-    }
-
-    function _removeBurner(address account) internal {
-        _burners.remove(account);
-        emit BurnerRemoved(account);
-    }
-    
-     // IL FAUT APPELER LES FONCTIONS DU CONTRAT VERIFIER.SOL
-    address addressVerifier;
-
-    /**@param _addressVerif, address of the verifier */
-    function setAddressVerif(address _addressVerif) public {
-        addressVerifier = _addressVerif;
-    }
-
-    /** @return adr , address of the verifier, not a really useful function*/
-    function getAddressVerif() public view returns(address adr){
-        return addressVerifier;
-    }
-
-    /**@param a, b, c, input, data returned by the snarkjs function "generatecall"
-    * @param personne, 1 or 2 <=> sender or verifier, inputs are differents
-    */
-    function callVerifier(uint[2] memory a,uint[2][2] memory b,uint[2] memory c,uint[3] memory input, uint personne) private view returns(bool) {
-        InterfaceVerifier v = InterfaceVerifier(addressVerifier);
-        if(personne == 1){
-            return v.verifyProofSender(a,b,c,input);
-        }
-        if(personne == 2){
-            return v.verifyProofReceiver(a,b,c,input);
-        }
-    }
-
-    /**
-    @dev using a struct for the parameters of the callVerifier function is more convenient */
-    struct VerifParameters {
-        uint[2] a;
-        uint[2][2] b;
-        uint[2] c;
-        uint[3] input;
-    }
-
-    /**
-    * @param _addr , address to return the balance's hash from
-    * @return bytes32 balance's mimc hash
-    */
-    function getBalanceHash(address _addr) public view returns (bytes32){
-        return _balanceHashes[_addr];
-    }
-
-
-    /**
-    @dev confidential transaction, there should be an interaction between the two parties
-    @param _to, address of the receiver,
-    @param vSender, vReceiver: two VerifParameters objects, they are used for the zkp approval
-    @return val , transaction ok/not ok 
-    */
-    function confidentialTransfer(address _to, uint256 value,
-        VerifParameters memory vSender, VerifParameters memory vReceiver)
-        public returns(bool val)
+    function transferFrom(
+        address _from,
+        address _to,
+        uint256 _value
+    )
+    public
+    whenNotPaused
+    returns (bool)
     {
-        bool senderProofIsCorrect = callVerifier(vSender.a,vSender.b,vSender.c,vSender.input,1);
-        bool receiverProofIsCorrect = callVerifier(vReceiver.a,vReceiver.b,vReceiver.c,vReceiver.input,2);
+        require(_to != address(0), "cannot transfer to address zero");
+        require(!frozen[_to] && !frozen[_from] && !frozen[msg.sender], "address frozen");
+        require(_value <= balances[_from], "insufficient funds");
+        require(_value <= allowed[_from][msg.sender], "insufficient allowance");
 
-        val = false;
-        if(senderProofIsCorrect && receiverProofIsCorrect){
-            
-            _balanceHashes[msg.sender] = bytes32(mimc(_balances[msg.sender] - value));
-            _balanceHashes[_to] = bytes32(mimc(_balances[_to] + value));
-            
-            _balances[msg.sender] = _balances[msg.sender].sub(value, "ERC20: transfer amount exceeds balance");
-            _balances[_to] = _balances[_to].add(value);            
-            val = true;
-        }
-        return val;
+        balances[_from] = balances[_from].sub(_value);
+        balances[_to] = balances[_to].add(_value);
+        allowed[_from][msg.sender] = allowed[_from][msg.sender].sub(_value);
+        emit Transfer(_from, _to, _value);
+        return true;
+    }
+
+    /**
+     * @dev Approve the passed address to spend the specified amount of tokens on behalf of msg.sender.
+     * Beware that changing an allowance with this method brings the risk that someone may use both the old
+     * and the new allowance by unfortunate transaction ordering. One possible solution to mitigate this
+     * race condition is to first reduce the spender's allowance to 0 and set the desired value afterwards:
+     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
+     * @param _spender The address which will spend the funds.
+     * @param _value The amount of tokens to be spent.
+     */
+    function approve(address _spender, uint256 _value) public whenNotPaused returns (bool) {
+        require(!frozen[_spender] && !frozen[msg.sender], "address frozen");
+        allowed[msg.sender][_spender] = _value;
+        emit Approval(msg.sender, _spender, _value);
+        return true;
+    }
+
+    /**
+     * @dev Function to check the amount of tokens that an owner allowed to a spender.
+     * @param _owner address The address which owns the funds.
+     * @param _spender address The address which will spend the funds.
+     * @return A uint256 specifying the amount of tokens still available for the spender.
+     */
+    function allowance(
+        address _owner,
+        address _spender
+    )
+    public
+    view
+    returns (uint256)
+    {
+        return allowed[_owner][_spender];
+    }
+
+    // OWNER FUNCTIONALITY
+
+    /**
+     * @dev Throws if called by any account other than the owner.
+     */
+    modifier onlyOwner() {
+        require(msg.sender == owner, "onlyOwner");
+        _;
+    }
+
+    /**
+     * @dev Allows the current owner to transfer control of the contract to a newOwner.
+     * @param _newOwner The address to transfer ownership to.
+     */
+    function transferOwnership(address _newOwner) public onlyOwner {
+        require(_newOwner != address(0), "cannot transfer ownership to address zero");
+        emit OwnershipTransferred(owner, _newOwner);
+        owner = _newOwner;
+    }
+
+    // PAUSABILITY FUNCTIONALITY
+
+    /**
+     * @dev Modifier to make a function callable only when the contract is not paused.
+     */
+    modifier whenNotPaused() {
+        require(!paused, "whenNotPaused");
+        _;
+    }
+
+    /**
+     * @dev called by the owner to pause, triggers stopped state
+     */
+    function pause() public onlyOwner {
+        require(!paused, "already paused");
+        paused = true;
+        emit Pause();
+    }
+
+    /**
+     * @dev called by the owner to unpause, returns to normal state
+     */
+    function unpause() public onlyOwner {
+        require(paused, "already unpaused");
+        paused = false;
+        emit Unpause();
+    }
+
+    // COIN VOTE VERIFIER FUNCTIONALITY
+
+    /**
+     * @dev Sets a new law enforcement role address.
+     * @param _newCoinVelocityVerifier The new address allowed to freeze/unfreeze addresses and seize their tokens.
+     */
+    function setCoinVelocityVerifier(address _newCoinVelocityVerifier) public {
+        require(msg.sender == coinVelocityVerifier || msg.sender == owner, "only coinVelocityVerifier or Owner");
+        emit coinVeolocityVerifierSet(coinVelocityVerifier, _newCoinVelocityVerifier);
+        coinVelocityVerifier = _newCoinVelocityVerifier;
+    }
+
+    modifier onlyCoinVelocityVerifier() {
+        require(msg.sender == coinVelocityVerifier, "only coinVelocityVerifier");
+        _;
+    }
+
+    /**
+     * @dev Freezes an address balance from being transferred.
+     * @param _addr The new address to freeze.
+     */
+    function freeze(address _addr) public onlyCoinVelocityVerifier {
+        require(!frozen[_addr], "address already frozen");
+        frozen[_addr] = true;
+        emit AddressFrozen(_addr);
+    }
+
+    /**
+     * @dev Unfreezes an address balance allowing transfer.
+     * @param _addr The new address to unfreeze.
+     */
+    function unfreeze(address _addr) public onlyCoinVelocityVerifier {
+        require(frozen[_addr], "address already unfrozen");
+        frozen[_addr] = false;
+        emit AddressUnfrozen(_addr);
+    }
+
+    /**
+     * @dev Wipes the balance of a frozen address, burning the tokens
+     * and setting the approval to zero.
+     * @param _addr The new frozen address to wipe.
+     */
+    function wipeFrozenAddress(address _addr) public onlyCoinVelocityVerifier {
+        require(frozen[_addr], "address is not frozen");
+        uint256 _balance = balances[_addr];
+        balances[_addr] = 0;
+        totalSupply_ = totalSupply_.sub(_balance);
+        emit FrozenAddressWiped(_addr);
+        emit SupplyDecreased(_addr, _balance);
+        emit Transfer(_addr, address(0), _balance);
+    }
+
+    /**
+    * @dev Gets the balance of the specified address.
+    * @param _addr The address to check if frozen.
+    * @return A bool representing whether the given address is frozen.
+    */
+    function isFrozen(address _addr) public view returns (bool) {
+        return frozen[_addr];
+    }
+
+    // SUPPLY CONTROL FUNCTIONALITY
+
+    /**
+     * @dev Sets a new supply controller address.
+     * @param _newSupplyController The address allowed to burn/mint tokens to control supply.
+     */
+    function setSupplyController(address _newSupplyController) public {
+        require(msg.sender == supplyController || msg.sender == owner, "only SupplyController or Owner");
+        require(_newSupplyController != address(0), "cannot set supply controller to address zero");
+        emit SupplyControllerSet(supplyController, _newSupplyController);
+        supplyController = _newSupplyController;
+    }
+
+    modifier onlySupplyController() {
+        require(msg.sender == supplyController, "onlySupplyController");
+        _;
+    }
+
+    /**
+     * @dev Increases the total supply by minting the specified number of tokens to the supply controller account.
+     * @param _value The number of tokens to add.
+     * @return A boolean that indicates if the operation was successful.
+     */
+    function increaseSupply(uint256 _value) public onlySupplyController returns (bool success) {
+        totalSupply_ = totalSupply_.add(_value);
+        balances[supplyController] = balances[supplyController].add(_value);
+        emit SupplyIncreased(supplyController, _value);
+        emit Transfer(address(0), supplyController, _value);
+        return true;
+    }
+
+    /**
+     * @dev Decreases the total supply by burning the specified number of tokens from the supply controller account.
+     * @param _value The number of tokens to remove.
+     * @return A boolean that indicates if the operation was successful.
+     */
+    function decreaseSupply(uint256 _value) public onlySupplyController returns (bool success) {
+        require(_value <= balances[supplyController], "not enough supply");
+        balances[supplyController] = balances[supplyController].sub(_value);
+        totalSupply_ = totalSupply_.sub(_value);
+        emit SupplyDecreased(supplyController, _value);
+        emit Transfer(supplyController, address(0), _value);
+        return true;
     }
 }
