@@ -3,7 +3,7 @@ pragma solidity ^0.5.0;
 import "./@openzeppelin/contracts/access/Roles.sol";
 import "./@openzeppelin/contracts/token/ERC20/ERC20Fee.sol";
 
-contract BismuthCoin is ERC20Fee, ZkAssetMintable, ZkAsset {
+contract BismuthCoin is ERC20Fee {
     using Roles for Roles.Role;
 
     Roles.Role private _minters;
