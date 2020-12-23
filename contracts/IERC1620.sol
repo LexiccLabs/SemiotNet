@@ -158,12 +158,7 @@ interface IERC1620 {
     )
     external;
 
-    /// @notice Returns available funds for the given stream id and address
-    /// @dev Streams assigned to the zero address are considered invalid, and
-    ///  this function throws for queries about the zero address.
-    /// @param _streamId The stream for whom to query the balance
-    /// @param _addr The address for whom to query the balance
-    /// @return The total funds available to `addr` to withdraw
+
     function balanceOf(
         uint256 _streamId,
         address _addr
