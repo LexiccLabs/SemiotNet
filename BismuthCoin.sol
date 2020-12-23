@@ -4,7 +4,7 @@ import "./SafeMath.sol";
 
 
 /**
- * @title BBismuthCoin
+ * @title BismuthCoin
  * @dev this contract is a Pausable ERC20 token with Burn and Mint
  * controleld by a central SupplyController. By implementing BCC StablecoinImplementation
  * this contract also includes external methods for setting
