@@ -3,8 +3,8 @@
 pragma solidity >=0.6.0 <0.8.0;
 
 import "./IERC20.sol";
-import "./BismuthCoin.sol";
-import "./BismuthToken.sol";
+import "./SemiottCoin.sol";
+import "./SemiottToken.sol";
 import "./zkInterfaces.sol";
 
 contract Ethereum934 {
