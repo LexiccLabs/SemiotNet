@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 /**
  * @dev Contract module that helps prevent reentrant calls to a function.
@@ -36,7 +37,7 @@ pragma solidity >=0.6.0 <0.8.0;
 
     uint256 private _status;
 
-    constructor () internal {
+    constructor () {
         _status = _NOT_ENTERED;
     }
 
