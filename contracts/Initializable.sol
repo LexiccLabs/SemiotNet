@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT
 
-// solhint-disable-next-line compiler-version
-pragma solidity ^0.5.16;
+pragma solidity >=0.6.0 <0.8.0;
 
 
 /**
