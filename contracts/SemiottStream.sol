@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "./SafeMath.sol";
 import "./Ownable.sol";
 import "./IERC20.sol";
-import "./IERC1620.sol";
 import "./ReentrancyGuard.sol";
 import "./Initializable.sol";
 
@@ -14,7 +14,7 @@ contract streamBeacon {
     
 }
 
-contract BismuthStream is IERC1620, Initializable, Ownable, ReentrancyGuard {
+contract SemiottStream is Initializable, Ownable, ReentrancyGuard {
     using SafeMath for uint256;
     
     address public BeaconContractAddress = 0x79474439753C7c70011C3b00e06e559378bAD040;
@@ -31,11 +31,14 @@ contract BismuthStream is IERC1620, Initializable, Ownable, ReentrancyGuard {
         return randomNumber;
        
     }
+   
+    
 
     /**
      * Types
      */
-      
+    
+     
     struct Timeframe {
         uint256 start;
         uint256 stop;
@@ -55,9 +58,7 @@ contract BismuthStream is IERC1620, Initializable, Ownable, ReentrancyGuard {
         uint256 balance;
     }
 
-    /**
-     * Storage
-     */
+
     mapping(uint256 => Stream) private streams;
     uint256 private streamNonce;
     mapping(uint256 => mapping(address => bool)) private updates;
@@ -335,7 +336,7 @@ contract BismuthStream is IERC1620, Initializable, Ownable, ReentrancyGuard {
             require(tokenContract.transfer(stream.sender, senderAmount), "erc20 transfer failed");
     }
 
-    function confirmUpdate(
+    function confirmUpdate  (
         uint256 _streamId,
         address _tokenAddress,
         uint256 _stopBlock,
