@@ -1,4 +1,6 @@
-pragma solidity ^0.5.1;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.6.0 <0.8.0;
 
 /// @title ERC-1620 Money Streaming Standard
 /// @dev See https://github.com/ethereum/eips/issues/1620
