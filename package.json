@@ -1,0 +1,25 @@
+{
+  "name": "bismuth",
+  "version": "1.0.0",
+  "description": "Dark Decentralised Stablecoin on Binance Smart Chain",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LatticeLabVentures/Bismuth.git"
+  },
+  "keywords": [
+    "Bismuth"
+  ],
+  "author": "GBA",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LatticeLabVentures/Bismuth/issues"
+  },
+  "homepage": "https://github.com/LatticeLabVentures/Bismuth#readme"
+}
