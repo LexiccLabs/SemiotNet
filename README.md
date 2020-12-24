@@ -1,5 +1,5 @@
 # Semiott Secure Stablecoin Streaming 
-Dark Decentralised Stablecoin on Binance Smart Chain
+Velocity Verified Stablecoin Streaming on Binance Smart Chain
 
 ## Features
 - Algorithmic Stablecoin with Money Streaming
