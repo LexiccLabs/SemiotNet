@@ -6,7 +6,8 @@ pragma experimental ABIEncoderV2;
 import "./ReentrancyGuard.sol";
 import "./Initializable.sol";
 import "./SafeMath.sol";
-import "./Verifier.sol";
+
+import "./SemiottVerifier.sol";
 
 
 /**
