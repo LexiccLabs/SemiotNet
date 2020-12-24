@@ -1,4 +1,4 @@
-# Bismuth
+# Semiott Secure Stablecoin Streaming 
 Dark Decentralised Stablecoin on Binance Smart Chain
 
 ## Features
