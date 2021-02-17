@@ -10,7 +10,7 @@ import "./Address.sol";
 import "./mimc7.sol";
 
 
-contract BizmuthToken is Context, IERC20 {
+contract SemiottToken is Context, IERC20 {
     using SafeMath for uint256;
     using Address for address;
 
