@@ -1,11 +1,14 @@
 # Semiott Secure Stablecoin Streaming 
-Velocity Verified Stablecoin Streaming on Binance Smart Chain
+Self Organized and Self Stablized Stablecoin Powered by Verified Time Lock Weighted Average Prices
 
 ## Features
-- Algorithmic Stablecoin with Money Streaming
-- Stablecoin with Pause and Freeze Facilities
+- Stablecoin Distribution over Money Streaming Protocol
+- Stablecoin with Time Locked Pause and Freeze Facilities
+- Stablecoin with Supply Expansion and Contraction on Bonding Curves
 - Money Streaming based on Multi Dimensional Time Locks
 - Multi Dimensional Time Locks using Verifiable Delay Functions
-- Confidential Control of Stablecoin Distribution Velocity
-- Privacy Preserving Confidential Coin Transfers
+- Optimistic Rollup based Dispute and Fraud Control
+- Privacy Preserving Confidential Share and Bond Tokens
+- Zero Knowldge Rollups for Currency Bond and Share Token Transactions
+- Zero Knowldge Exchange for Currency Bond and Share Token Exchange
 
