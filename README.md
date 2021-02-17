@@ -1,4 +1,4 @@
-# Semiott Secure Stablecoin Streaming 
+# Self Organized and Self Stablized Stablecoin Secure & Scalable Streaming Network 
 Self Organized and Self Stablized Stablecoin Powered by Verified Time Lock Weighted Average Prices
 
 ## Features
