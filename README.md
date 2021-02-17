@@ -1,5 +1,5 @@
-# Self Organized and Self Stablized Stablecoin Secure & Scalable Streaming Network 
-Self Organized and Self Stablized Stablecoin Powered by Verified Time Lock Weighted Average Prices
+# SemiotNet Stablecoin Streaming Network (0xxD)
+- Self Organized and Self Stablized Stablecoin Secure & Scalable Streaming Network 
 
 ## Features
 - Stablecoin Distribution over Money Streaming Protocol
