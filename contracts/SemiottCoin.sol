@@ -11,7 +11,7 @@ import "./SemiottVerifier.sol";
 
 
 /**
- * @title BBismuthCoin
+ * @title SemiottCoin
  * @dev this contract is a Pausable ERC20 token with Burn and Mint
  * controleld by a central SupplyController. By implementing BCC StablecoinImplementation
  * this contract also includes external methods for setting
@@ -22,7 +22,7 @@ import "./SemiottVerifier.sol";
  * Any call to transfer against this contract should fail
  * with insufficient funds since no tokens will be issued there.
  */
-contract BismuthCoin is Initializable, ReentrancyGuard  {
+contract SemiottCoin is Initializable, ReentrancyGuard  {
 
 
     using SafeMath for uint256;
