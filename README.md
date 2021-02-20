@@ -7,6 +7,10 @@ SemiotNet Secure Stablecoin is Algorithmic Stablecoin providing users the advant
 
 SemiotNet has a twofold perspective towards the deployment of an Algorithmic Stablecoin. Stemming from the guarantee of privacy, it provides more amateur users to experiment with the world of cryptocurrencies before moving into more volatile currencies. Secondly it ensures the primary usage of a Stablecoin as a means to an end in the financial system by serving as a tender towards making payments through an official system. Stablecoins have grown over 493% over 2020 and the road ahead is only steeper. SemiotNet is a strong and balanced entry into this world of Stablecoins guaranteeing the fiat value of currency along with the privacy which is held most dearest in this digital age. 
 
+## TestNet
+- SemiottCoin >> https://testnet.bscscan.com/tx/0x856a3b4feabd7c7bea810bd3d3fc5cb6ecde80916e0383607b4e869ec8fd5310
+- SemiottStream >> https://testnet.bscscan.com/tx/0x473301b6e3da1102226d0a0acbe0aa18c36c4abaa6fe6f2d57489960450af848
+- SemiottVerifier >> https://testnet.bscscan.com/tx/0x442bfd674a106aa793602239026a30fa01d2785221f2876a6643e04aacd33c7a
 
 ## Features
 - Stablecoin with Time Locked Pause and Freeze Facilities
