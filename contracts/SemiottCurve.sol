@@ -15,10 +15,11 @@ pragma experimental ABIEncoderV2;
 import "./Ownable.sol";
 import "./BancorFormula.sol";
 import './SafeMath.sol';
+import "./ReentrancyGuard.sol";
 import "./SemiottToken.sol";
 
 
-contract SemiottCurve is Ownable, BancorFormula {
+contract SemiottCurve is Ownable, ReentrancyGuard, BancorFormula {
 
   using SafeMath for uint256;
 
