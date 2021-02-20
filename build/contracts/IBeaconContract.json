@@ -39,7 +39,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestRandomness\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getRandomness\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":\"IBeaconContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":{\"keccak256\":\"0xbc6eb73a93b380cd9eefeeac080c4d3afd7e3493a0362ed66e3d7e6d0663d3e9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba7f7d7fcf8f66164e224f21ee6b35d83cc6a115a80b90f7534487999ca3a7f8\",\"dweb:/ipfs/QmRTHFJYuTamNmeozdu2uKTrPiog6wCq7iNohWaPMk4D9g\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestRandomness\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getRandomness\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":\"IBeaconContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":{\"keccak256\":\"0xc865eeb277f9ad0dbb09b8e7f39f391734eea68c098c4931394eaee005058024\",\"license\":\"Apache License 2.0\",\"urls\":[\"bzz-raw://85b93d62d946a54bc5d34971293bdf9cf2a12f585405c150ef6725bf5c80d515\",\"dweb:/ipfs/Qmf3m9Bsc2xAy9wMLUP8GdJQ2WMmMJ5zz5jmymiPZtkN1Q\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -47,21 +47,21 @@
   "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.6.0 <0.8.0;\npragma experimental ABIEncoderV2;\n\ninterface IBeaconContract {\n    /*\n      If there is a randomness that was calculated based on blockNumber, returns it.\n      Otherwise, returns 0.\n    */\n    function getRandomness(uint256 blockNumber) external view returns (bytes32);\n\n    /*\n      Returns the latest pair of (blockNumber, randomness) that was registered.\n    */\n    function getLatestRandomness() external view returns (uint256, bytes32);\n}\n",
+  "source": "// SPDX-License-Identifier: Apache License 2.0\n\npragma solidity >=0.6.0 <0.8.0;\npragma experimental ABIEncoderV2;\n\ninterface IBeaconContract {\n    /*\n      If there is a randomness that was calculated based on blockNumber, returns it.\n      Otherwise, returns 0.\n    */\n    function getRandomness(uint256 blockNumber) external view returns (bytes32);\n\n    /*\n      Returns the latest pair of (blockNumber, randomness) that was registered.\n    */\n    function getLatestRandomness() external view returns (uint256, bytes32);\n}\n",
   "sourcePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
   "ast": {
     "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
     "exportedSymbols": {
       "IBeaconContract": [
-        842
+        2174
       ]
     },
-    "id": 843,
-    "license": "MIT",
+    "id": 2175,
+    "license": "Apache License 2.0",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 826,
+        "id": 2158,
         "literals": [
           "solidity",
           ">=",
@@ -72,16 +72,16 @@
           ".0"
         ],
         "nodeType": "PragmaDirective",
-        "src": "33:31:3"
+        "src": "48:31:5"
       },
       {
-        "id": 827,
+        "id": 2159,
         "literals": [
           "experimental",
           "ABIEncoderV2"
         ],
         "nodeType": "PragmaDirective",
-        "src": "65:33:3"
+        "src": "80:33:5"
       },
       {
         "abstract": false,
@@ -89,33 +89,33 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "fullyImplemented": false,
-        "id": 842,
+        "id": 2174,
         "linearizedBaseContracts": [
-          842
+          2174
         ],
         "name": "IBeaconContract",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "functionSelector": "453f4f62",
-            "id": 834,
+            "id": 2166,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getRandomness",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 830,
+              "id": 2162,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 829,
+                  "id": 2161,
                   "mutability": "mutable",
                   "name": "blockNumber",
                   "nodeType": "VariableDeclaration",
-                  "scope": 834,
-                  "src": "282:19:3",
+                  "scope": 2166,
+                  "src": "297:19:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -123,10 +123,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 828,
+                    "id": 2160,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "282:7:3",
+                    "src": "297:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -135,20 +135,20 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "281:21:3"
+              "src": "296:21:5"
             },
             "returnParameters": {
-              "id": 833,
+              "id": 2165,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 832,
+                  "id": 2164,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 834,
-                  "src": "326:7:3",
+                  "scope": 2166,
+                  "src": "341:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -156,10 +156,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 831,
+                    "id": 2163,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "326:7:3",
+                    "src": "341:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -168,40 +168,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "325:9:3"
+              "src": "340:9:5"
             },
-            "scope": 842,
-            "src": "259:76:3",
+            "scope": 2174,
+            "src": "274:76:5",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
             "functionSelector": "f4bebd7a",
-            "id": 841,
+            "id": 2173,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "getLatestRandomness",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 835,
+              "id": 2167,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "463:2:3"
+              "src": "478:2:5"
             },
             "returnParameters": {
-              "id": 840,
+              "id": 2172,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 837,
+                  "id": 2169,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 841,
-                  "src": "489:7:3",
+                  "scope": 2173,
+                  "src": "504:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -209,10 +209,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 836,
+                    "id": 2168,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "489:7:3",
+                    "src": "504:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -222,12 +222,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 839,
+                  "id": 2171,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 841,
-                  "src": "498:7:3",
+                  "scope": 2173,
+                  "src": "513:7:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -235,10 +235,10 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 838,
+                    "id": 2170,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
-                    "src": "498:7:3",
+                    "src": "513:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes32",
                       "typeString": "bytes32"
@@ -247,30 +247,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "488:18:3"
+              "src": "503:18:5"
             },
-            "scope": 842,
-            "src": "435:72:3",
+            "scope": 2174,
+            "src": "450:72:5",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 843,
-        "src": "100:409:3"
+        "scope": 2175,
+        "src": "115:409:5"
       }
     ],
-    "src": "33:477:3"
+    "src": "48:477:5"
   },
   "legacyAST": {
     "attributes": {
       "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
       "exportedSymbols": {
         "IBeaconContract": [
-          842
+          2174
         ]
       },
-      "license": "MIT"
+      "license": "Apache License 2.0"
     },
     "children": [
       {
@@ -285,9 +285,9 @@
             ".0"
           ]
         },
-        "id": 826,
+        "id": 2158,
         "name": "PragmaDirective",
-        "src": "33:31:3"
+        "src": "48:31:5"
       },
       {
         "attributes": {
@@ -296,9 +296,9 @@
             "ABIEncoderV2"
           ]
         },
-        "id": 827,
+        "id": 2159,
         "name": "PragmaDirective",
-        "src": "65:33:3"
+        "src": "80:33:5"
       },
       {
         "attributes": {
@@ -312,10 +312,10 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            842
+            2174
           ],
           "name": "IBeaconContract",
-          "scope": 843
+          "scope": 2175
         },
         "children": [
           {
@@ -328,7 +328,7 @@
                 null
               ],
               "name": "getRandomness",
-              "scope": 842,
+              "scope": 2174,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -341,7 +341,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "blockNumber",
-                      "scope": 834,
+                      "scope": 2166,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -353,19 +353,19 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 828,
+                        "id": 2160,
                         "name": "ElementaryTypeName",
-                        "src": "282:7:3"
+                        "src": "297:7:5"
                       }
                     ],
-                    "id": 829,
+                    "id": 2161,
                     "name": "VariableDeclaration",
-                    "src": "282:19:3"
+                    "src": "297:19:5"
                   }
                 ],
-                "id": 830,
+                "id": 2162,
                 "name": "ParameterList",
-                "src": "281:21:3"
+                "src": "296:21:5"
               },
               {
                 "children": [
@@ -374,7 +374,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 834,
+                      "scope": 2166,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -386,24 +386,24 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 831,
+                        "id": 2163,
                         "name": "ElementaryTypeName",
-                        "src": "326:7:3"
+                        "src": "341:7:5"
                       }
                     ],
-                    "id": 832,
+                    "id": 2164,
                     "name": "VariableDeclaration",
-                    "src": "326:7:3"
+                    "src": "341:7:5"
                   }
                 ],
-                "id": 833,
+                "id": 2165,
                 "name": "ParameterList",
-                "src": "325:9:3"
+                "src": "340:9:5"
               }
             ],
-            "id": 834,
+            "id": 2166,
             "name": "FunctionDefinition",
-            "src": "259:76:3"
+            "src": "274:76:5"
           },
           {
             "attributes": {
@@ -415,7 +415,7 @@
                 null
               ],
               "name": "getLatestRandomness",
-              "scope": 842,
+              "scope": 2174,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -428,9 +428,9 @@
                   ]
                 },
                 "children": [],
-                "id": 835,
+                "id": 2167,
                 "name": "ParameterList",
-                "src": "463:2:3"
+                "src": "478:2:5"
               },
               {
                 "children": [
@@ -439,7 +439,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 841,
+                      "scope": 2173,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -451,21 +451,21 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 836,
+                        "id": 2168,
                         "name": "ElementaryTypeName",
-                        "src": "489:7:3"
+                        "src": "504:7:5"
                       }
                     ],
-                    "id": 837,
+                    "id": 2169,
                     "name": "VariableDeclaration",
-                    "src": "489:7:3"
+                    "src": "504:7:5"
                   },
                   {
                     "attributes": {
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 841,
+                      "scope": 2173,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -477,34 +477,34 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 838,
+                        "id": 2170,
                         "name": "ElementaryTypeName",
-                        "src": "498:7:3"
+                        "src": "513:7:5"
                       }
                     ],
-                    "id": 839,
+                    "id": 2171,
                     "name": "VariableDeclaration",
-                    "src": "498:7:3"
+                    "src": "513:7:5"
                   }
                 ],
-                "id": 840,
+                "id": 2172,
                 "name": "ParameterList",
-                "src": "488:18:3"
+                "src": "503:18:5"
               }
             ],
-            "id": 841,
+            "id": 2173,
             "name": "FunctionDefinition",
-            "src": "435:72:3"
+            "src": "450:72:5"
           }
         ],
-        "id": 842,
+        "id": 2174,
         "name": "ContractDefinition",
-        "src": "100:409:3"
+        "src": "115:409:5"
       }
     ],
-    "id": 843,
+    "id": 2175,
     "name": "SourceUnit",
-    "src": "33:477:3"
+    "src": "48:477:5"
   },
   "compiler": {
     "name": "solc",
@@ -512,7 +512,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2021-02-20T02:10:13.050Z",
+  "updatedAt": "2021-02-20T12:16:30.248Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
