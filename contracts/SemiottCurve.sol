@@ -3,7 +3,6 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20Detailed.sol";
 import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
 import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
@@ -15,7 +14,7 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
  * https://github.com/oed/bonding-curves/blob/master/contracts/EthBondingCurvedToken.sol
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
-contract SemiottCurve is ERC20Detailed, ERC20, Ownable {
+contract SemiottCurve is ERC20, Ownable {
 
   event Minted(uint256 amount, uint256 totalCost);
   event Burned(uint256 amount, uint256 reward);
@@ -42,7 +41,7 @@ contract SemiottCurve is ERC20Detailed, ERC20, Ownable {
     string memory _symbol,
     uint8 _decimals,
     uint8 _exponent
-  ) ERC20Detailed(_name, _symbol, _decimals) public {
+  ) ERC20(_name, _symbol, _decimals) public {
     exponent = _exponent;
   }
 
