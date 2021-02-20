@@ -3,9 +3,6 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "./ERC20.sol";
-import "./Ownable.sol";
-import "./BancorFormula.sol";
 
 /**
  * @title Bonding Curve
@@ -14,85 +11,155 @@ import "./BancorFormula.sol";
  * https://github.com/bancorprotocol/contracts
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
-contract BondingCurve is ERC20, BancorFormula, Ownable {
-  uint256 public poolBalance;
 
-  /*
-    reserve ratio, represented in ppm, 1-1000000
-    1/3 corresponds to y= multiple * x^2
-    1/2 corresponds to y= multiple * x
-    2/3 corresponds to y= multiple * x^1/2
-    multiple will depends on contract initialization,
-    specificallytotalAmount and poolBalance parameters
-    we might want to add an 'initialize' function that will allow
-    the owner to send ether to the contract and mint a given amount of tokens
-  */
-  uint32 public reserveRatio;
 
-  /*
-    - Front-running attacks are currently mitigated by the following mechanisms:
-    TODO - minimum return argument for each conversion provides a way to define a minimum/maximum price for the transaction
-    - gas price limit prevents users from having control over the order of execution
-  */
-  uint256 public gasPrice = 0 wei; // maximum gas price for bancor transactions
+import "./ERC20.sol";
+import "./Ownable.sol";
+import "./BancorFormula.sol";
+import './SafeMath.sol';
 
-  /**
-   * @dev default function
-   * gas ~ 91645
-   */
-   
-  fallback() payable external {
-    buy();
+
+contract SemiottCurve is Ownable, BancorFormula {
+
+  using SafeMath for uint256;
+
+  ERC20 public mToken;
+
+  struct Holder {
+    address   holder;   // holder address
+    uint256   ntoken;   // number of bonded token
+    uint256   target;    // the target sell price
   }
+  // mapping address to associated holder struct
+  mapping (address => Holder) public mHolders;
+  // the holder array used to find highest target sell price
+  address[] public arrayHolders;
 
-  /**
-   * @dev Buy tokens
-   * gas ~ 77825
-   * TODO implement maxAmount that helps prevent miner front-running
-   */
-  function buy() validGasPrice public payable returns(bool) {
-    require(msg.value > 0);
-    uint256 tokensToMint = calculatePurchaseReturn(totalSupply_, poolBalance, reserveRatio, msg.value);
-    totalSupply_ = totalSupply_.add(tokensToMint);
-    balances[msg.sender] = balances[msg.sender].add(tokensToMint);
-    poolBalance = poolBalance.add(msg.value);
-    LogMint(tokensToMint, msg.value);
-    return true;
-  }
+  // latest sold price
+  uint256 public  curSoldPrice;
 
-  /**
-   * @dev Sell tokens
-   * gas ~ 86936
-   * @param sellAmount Amount of tokens to withdraw
-   * TODO implement maxAmount that helps prevent miner front-running
-   */
-  function sell(uint256 sellAmount) validGasPrice public returns(bool) {
-    require(sellAmount > 0 && balances[msg.sender] >= sellAmount);
-    uint256 ethAmount = calculateSaleReturn(totalSupply_, poolBalance, reserveRatio, sellAmount);
-    msg.sender.transfer(ethAmount);
-    poolBalance = poolBalance.sub(ethAmount);
-    balances[msg.sender] = balances[msg.sender].sub(sellAmount);
-    totalSupply_ = totalSupply_.sub(sellAmount);
-    LogWithdraw(sellAmount, ethAmount);
-    return true;
-  }
+  // the number of remaining bonded tokens
+  uint256 public  supply;
+  uint256 public  initPrice;
 
-  // verifies that the gas price is lower than the universal limit
-  modifier validGasPrice() {
-    assert(tx.gasprice <= gasPrice);
+  modifier validHolder() {
+    require(mHolders[msg.sender].holder != address(0));
     _;
   }
 
-  /**
-    @dev Allows the owner to update the gas price limit
-    @param _gasPrice The new gas price limit
-  */
-  function setGasPrice(uint256 _gasPrice) onlyOwner public {
-    require(_gasPrice > 0);
-    gasPrice = _gasPrice;
+  ///////////////////////////////////////////////////////////////////
+  //  Constructor function
+  ///////////////////////////////////////////////////////////////////
+  // 1. constructor
+  constructor(address _tokenAddress) public {
+      require(_tokenAddress != address(0));
+      // instantiate deployed Ocean token contract
+      mToken = Token(_tokenAddress);
+      // initial available supply of bonded token
+      supply = 100;
+      // inital price for bonded token
+      initPrice = 1;
   }
 
-  event LogMint(uint256 amountMinted, uint256 totalCost);
-  event LogWithdraw(uint256 amountWithdrawn, uint256 reward);
-  event LogBondingCurve(string logString, uint256 value);
+  function buyTokens(uint256 _ntoken, uint256 _target) public returns (bool) {
+    // first check whether the holder exist, if not, create holder struct
+    if (mHolders[msg.sender].holder == address(0)){
+        mHolders[msg.sender] = Holder(msg.sender, 0, 0);
+        arrayHolders.push(msg.sender);
+    }
+
+    // if supply is available, buy bonded token upto available balance with fixed price
+    if(supply > 0) {
+      uint256 amount = (_ntoken > supply) ? supply : _ntoken;
+      // make payment
+      require(mToken.transferFrom(msg.sender, address(this), amount.mul(initPrice)));
+      // update balance
+      mHolders[msg.sender].ntoken = mHolders[msg.sender].ntoken.add(amount);
+      // update supply
+      supply = supply.sub(amount);
+      // update target price
+      mHolders[msg.sender].target = _target;
+    }
+
+    // if all bonded tokens are sold out, buy from another holders
+    // buy the tokens with target price from the nextSeller
+    // for time being, we limit the buy amount equals to balance of nextSeller
+    // we will improve this to buy more in the next available sellers in the future
+    if(supply == 0){
+      // find next seller
+      address seller = findNextHolder();
+      // calculate amount of tokens to buy
+      uint256 num =  (_ntoken > mHolders[seller].ntoken) ? mHolders[seller].ntoken : _ntoken;
+      // calculate cost
+      uint256 cost = num.mul(mHolders[seller].target);
+      // make payment
+      require(mToken.transferFrom(msg.sender, mHolders[seller].holder, cost));
+      // update seller balance
+      mHolders[seller].ntoken = mHolders[seller].ntoken.sub(num);
+      // update buyer balance
+      mHolders[msg.sender].ntoken = mHolders[msg.sender].ntoken.add(num);
+      // there is no change in total supply
+      mHolders[msg.sender].target = _target;
+    }
+    return true;
+  }
+
+  function sellTokens(uint256 amount) public validHolder returns (bool) {
+    // holder shall have enough bonded token to sell
+    require(mHolders[msg.sender].ntoken >= amount);
+    // calculate payout of reserved token
+    uint256 payout = amount.mul(initPrice);
+    // ensure the contract has enough reserved token to pay out
+    require(mToken.balanceOf(address(this)) >= payout);
+    // transfer reserved token to holder
+    require(mToken.transfer(msg.sender, payout));
+    // decrease the balance of bonded token for seller
+    mHolders[msg.sender].ntoken = mHolders[msg.sender].ntoken.sub(amount);
+    // update supply
+    supply = supply.add(amount);
+    return true;
+  }
+
+  function changeTargetPrice(uint256 _price) public validHolder returns (bool) {
+    // change his target sell price
+    mHolders[msg.sender].target = _price;
+    return true;
+  }
+
+  // query the next available sell price
+  function queryNextPrice() public view returns(uint256) {
+    //check remaining supply
+    if(supply > 0){
+      return initPrice;
+    } else if (supply == 0){
+      return mHolders[findNextHolder()].target;
+    }
+  }
+
+
+  function getTokenSupply() public view returns (uint256) {
+    return supply;
+  }
+
+  // query balance of bonded token
+  function getTokenBalance() public view validHolder returns (uint256) {
+    return mHolders[msg.sender].ntoken;
+  }
+
+  function findNextHolder() internal view returns(address) {
+    uint256 maximal = 0;
+    for(uint256 i; i < arrayHolders.length; i++){
+        // skip holders with zero token balance
+        if(mHolders[arrayHolders[i]].ntoken == 0){
+          continue;
+        }
+        // find the holder with highest target sell price
+        if(mHolders[arrayHolders[i]].target > mHolders[arrayHolders[maximal]].target){
+            maximal = i;
+        }
+    }
+
+    return mHolders[arrayHolders[maximal]].holder;
+  }
+
 }
