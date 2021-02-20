@@ -12,14 +12,16 @@ pragma experimental ABIEncoderV2;
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
 
-import "./Ownable.sol";
-import "./BancorFormula.sol";
 import './SafeMath.sol';
+import "./Ownable.sol";
 import "./ReentrancyGuard.sol";
+
+import "./IBondingCurve.sol";
+import "./BancorFormula.sol";
+
 import "./SemiottToken.sol";
 
-
-contract SemiottCurve is Ownable, ReentrancyGuard, BancorFormula {
+contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula {
 
   using SafeMath for uint256;
 
