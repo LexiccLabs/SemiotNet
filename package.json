@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/LatticeLabVentures/Bismuth/issues"
   },
-  "homepage": "https://github.com/LatticeLabVentures/Bismuth#readme"
+  "homepage": "https://github.com/LatticeLabVentures/Bismuth#readme",
+  "dependencies": {
+    "@openzeppelin/contracts": "^3.4.0"
+  }
 }
