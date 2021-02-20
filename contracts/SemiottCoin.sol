@@ -8,7 +8,8 @@ import "./Initializable.sol";
 import "./SafeMath.sol";
 import "./Context.sol";
 
-import "./SemiottVerifier.sol";
+import "./SemiottStream.sol";
+import "./SemiottCurve.sol";
 
 
 /**
