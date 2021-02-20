@@ -1,10 +1,13 @@
-pragma solidity >=0.5.0 <0.6.0;
+// SPDX-License-Identifier: MIT
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
+pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
+
+import "./ERC20.sol";
 
 import "./ACE.sol";
-import "../utils/IntegerUtils.sol";
-import "../utils/NoteUtils.sol";
+import "./IntegerUtils.sol";
+import "./NoteUtils.sol";
 
 contract NoteRegistry {
     using IntegerUtils for uint;
