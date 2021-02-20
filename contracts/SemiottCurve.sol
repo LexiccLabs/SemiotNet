@@ -26,6 +26,36 @@ contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula 
   using SafeMath for uint256;
 
   SemiottToken public mToken;
+  
+      /*
+        reserve ratio, represented in ppm, 1-1000000
+        1/3 corresponds to y= multiple * x^2
+        1/2 corresponds to y= multiple * x
+        2/3 corresponds to y= multiple * x^1/2
+    */
+    
+    uint32 public reserveRatio;
+    
+      constructor(address _tokenAddress, uint32 _reserveRatio) public {
+      
+      reserveRatio = _reserveRatio;
+      require(_tokenAddress != address(0));
+      // instantiate deployed Ocean token contract
+      mToken = SemiottToken(_tokenAddress);
+      // initial available supply of bonded token
+      supply = 100;
+      // inital price for bonded token
+      initPrice = 1;
+  }
+
+
+    function getContinuousMintReward(uint _reserveTokenAmount) public view returns (uint) {
+        return calculatePurchaseReturn(continuousSupply(), reserveBalance(), reserveRatio, _reserveTokenAmount);
+    }
+
+    function getContinuousBurnRefund(uint _continuousTokenAmount) public view returns (uint) {
+        return calculateSaleReturn(continuousSupply(), reserveBalance(), reserveRatio, _continuousTokenAmount);
+    }
 
   struct Holder {
     address   holder;   // holder address
@@ -47,20 +77,6 @@ contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula 
   modifier validHolder() {
     require(mHolders[msg.sender].holder != address(0));
     _;
-  }
-
-  ///////////////////////////////////////////////////////////////////
-  //  Constructor function
-  ///////////////////////////////////////////////////////////////////
-  // 1. constructor
-  constructor(address _tokenAddress) public {
-      require(_tokenAddress != address(0));
-      // instantiate deployed Ocean token contract
-      mToken = SemiottToken(_tokenAddress);
-      // initial available supply of bonded token
-      supply = 100;
-      // inital price for bonded token
-      initPrice = 1;
   }
 
   function buyTokens(uint256 _ntoken, uint256 _target) public returns (bool) {
