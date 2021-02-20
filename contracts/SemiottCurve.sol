@@ -3,8 +3,8 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "openzeppelin-solidity/contracts/token/ERC20/ERC20.sol";
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "./ERC20.sol";
+import "./Ownable.sol";
 
 /**
  * @title Bonding Curve
