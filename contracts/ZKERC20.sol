@@ -1,7 +1,10 @@
-pragma solidity >=0.5.0 <0.6.0;
+// SPDX-License-Identifier: MIT
 
-import "../ACE/ACE.sol";
-import "../libs/LibEIP712.sol";
+pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
+
+import "./ACE.sol";
+import "./LibEIP712.sol";
 
 contract ZKERC20 is LibEIP712 {
     using NoteUtils for bytes;
