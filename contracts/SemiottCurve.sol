@@ -2,7 +2,7 @@ pragma solidity ^0.4.18;
 
 import "./ERC20.sol";
 import "./Ownable.sol";
-import "./BondingCurve.sol";
+import "./BancorFormula.sol";
 
 /**
  * @title Bonding Curve
@@ -11,7 +11,7 @@ import "./BondingCurve.sol";
  * https://github.com/bancorprotocol/contracts
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
-contract BondingCurve is ERC20, BondingCurve, Ownable {
+contract BondingCurve is ERC20, BancorFormula, Ownable {
   uint256 public poolBalance;
 
   /*
