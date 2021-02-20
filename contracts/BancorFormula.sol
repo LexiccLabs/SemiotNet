@@ -1,8 +1,10 @@
-pragma solidity 0.4.25;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "./SafeMath.sol";
 import "./Power.sol"; // Efficient power function.
-
 
 /**
 * @title Bancor formula by Bancor
