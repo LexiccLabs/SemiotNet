@@ -1,4 +1,7 @@
-pragma solidity ^0.5.8;
+// SPDX-License-Identifier: Apache License 2.0
+
+pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "chainlink/v0.5/contracts/Chainlink.sol";
 import "chainlink/v0.5/contracts/ChainlinkClient.sol";
