@@ -3,7 +3,7 @@
 pragma solidity >=0.6.0 <0.8.0;
 pragma experimental ABIEncoderV2;
 
-import "./SemiottToken.sol";
+import "./SemiottCoin.sol";
 import "./Utils.sol";
 import "./InnerProductVerifier.sol";
 import "./ZetherVerifier.sol";
@@ -13,7 +13,7 @@ contract ZSC {
     using Utils for uint256;
     using Utils for Utils.G1Point;
 
-    CashToken coin;
+    SemiottCoin coin;
     ZetherVerifier zetherVerifier;
     BurnVerifier burnVerifier;
     uint256 public epochLength;
