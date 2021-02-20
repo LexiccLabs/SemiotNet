@@ -31,13 +31,10 @@ contract SemiottStream is Initializable, Ownable, ReentrancyGuard {
         return randomNumber;
        
     }
-   
     
-
     /**
      * Types
      */
-    
      
     struct Timeframe {
         uint256 start;
