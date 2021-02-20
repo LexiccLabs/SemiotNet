@@ -21,7 +21,7 @@ import "./BancorFormula.sol";
 
 import "./SemiottToken.sol";
 
-contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula {
+contract SemiottCurve is Ownable, ReentrancyGuard, BancorFormula {
 
   using SafeMath for uint256;
 
@@ -36,9 +36,8 @@ contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula 
     
     uint32 public reserveRatio;
     
-      constructor(address _tokenAddress, uint32 _reserveRatio) public {
+      constructor(address _tokenAddress) public {
       
-      reserveRatio = _reserveRatio;
       require(_tokenAddress != address(0));
       // instantiate deployed Ocean token contract
       mToken = SemiottToken(_tokenAddress);
@@ -46,15 +45,6 @@ contract SemiottCurve is Ownable, ReentrancyGuard, IBondingCurve, BancorFormula 
       supply = 100;
       // inital price for bonded token
       initPrice = 1;
-  }
-
-
-    function getContinuousMintReward(uint _reserveTokenAmount) public view returns (uint) {
-        return calculatePurchaseReturn(continuousSupply(), reserveBalance(), reserveRatio, _reserveTokenAmount);
-    }
-
-    function getContinuousBurnRefund(uint _continuousTokenAmount) public view returns (uint) {
-        return calculateSaleReturn(continuousSupply(), reserveBalance(), reserveRatio, _continuousTokenAmount);
     }
 
   struct Holder {
