@@ -12,18 +12,18 @@ pragma experimental ABIEncoderV2;
  * https://github.com/ConsenSys/curationmarkets/blob/master/CurationMarkets.sol
  */
 
-
-import "./ERC20.sol";
 import "./Ownable.sol";
 import "./BancorFormula.sol";
 import './SafeMath.sol';
+
+import "./SemiottToken.sol";
 
 
 contract SemiottCurve is Ownable, BancorFormula {
 
   using SafeMath for uint256;
 
-  ERC20 public mToken;
+  SemiottToken public ssmToken;
 
   struct Holder {
     address   holder;   // holder address
