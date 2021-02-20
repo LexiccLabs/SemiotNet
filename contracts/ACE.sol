@@ -1,7 +1,10 @@
-pragma solidity >=0.5.0 <0.6.0;
+// SPDX-License-Identifier: MIT
+
+pragma solidity >=0.6.0 <0.8.0;
+pragma experimental ABIEncoderV2;
 
 import "./NoteRegistry.sol";
-import "../utils/NoteUtils.sol";
+import "./NoteUtils.sol";
 
 /**
  * @title The AZTEC Cryptography Engine
