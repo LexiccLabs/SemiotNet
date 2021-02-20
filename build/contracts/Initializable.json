@@ -1,16 +1,18 @@
 {
   "contractName": "Initializable",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.1+commit.f4a555be\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.  TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as possible by providing the encoded function call as the `_data` argument to {UpgradeableProxy-constructor}.  CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\",\"kind\":\"dev\",\"methods\":{},\"stateVariables\":{\"_initialized\":{\"details\":\"Indicates that the contract has been initialized.\"},\"_initializing\":{\"details\":\"Indicates that the contract is in the process of being initialized.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/Initializable.sol\":\"Initializable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/Initializable.sol\":{\"keccak256\":\"0x29e53036868fe14b169f76fcde7ba303836b22f5dbaddbe30087d6cd3a65fc8e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://485558ad1502d677e4d5b373ccbf0714a397e87352753700464724b402e1b489\",\"dweb:/ipfs/QmT1f15qh4qywpw6z1nYurBVj57UC932rEEJEAvJXBwfTQ\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea26469706673582212202cbebd7d09f6b61a346f133a7c3d96a202ca75cc270431b2675de907c2545bfd64736f6c63430007010033",
-  "deployedBytecode": "0x6080604052600080fdfea26469706673582212202cbebd7d09f6b61a346f133a7c3d96a202ca75cc270431b2675de907c2545bfd64736f6c63430007010033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"details\":\"This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.  TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as possible by providing the encoded function call as the `_data` argument to {UpgradeableProxy-constructor}.  CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\",\"kind\":\"dev\",\"methods\":{},\"stateVariables\":{\"_initialized\":{\"details\":\"Indicates that the contract has been initialized.\"},\"_initializing\":{\"details\":\"Indicates that the contract is in the process of being initialized.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/Initializable.sol\":\"Initializable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/Initializable.sol\":{\"keccak256\":\"0x29e53036868fe14b169f76fcde7ba303836b22f5dbaddbe30087d6cd3a65fc8e\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://485558ad1502d677e4d5b373ccbf0714a397e87352753700464724b402e1b489\",\"dweb:/ipfs/QmT1f15qh4qywpw6z1nYurBVj57UC932rEEJEAvJXBwfTQ\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603f80601d6000396000f3fe6080604052600080fdfea2646970667358221220f594ad5f2c70379e895042bc352f25cbb76088e0f628882a0c891f77afb8d58164736f6c63430007060033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220f594ad5f2c70379e895042bc352f25cbb76088e0f628882a0c891f77afb8d58164736f6c63430007060033",
   "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
   "sourceMap": "1042:1443:6:-:0;;;;;;;;;;;;;;;;;;;",
   "deployedSourceMap": "1042:1443:6:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.6.0 <0.8.0;\npragma experimental ABIEncoderV2;\n\n\n/**\n * @dev This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed\n * behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an\n * external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer\n * function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.\n * \n * TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as\n * possible by providing the encoded function call as the `_data` argument to {UpgradeableProxy-constructor}.\n * \n * CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure\n * that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.\n */\ncontract Initializable {\n\n    /**\n     * @dev Indicates that the contract has been initialized.\n     */\n    bool private _initialized;\n\n    /**\n     * @dev Indicates that the contract is in the process of being initialized.\n     */\n    bool private _initializing;\n\n    /**\n     * @dev Modifier to protect an initializer function from being invoked twice.\n     */\n    modifier initializer() {\n        require(_initializing || _isConstructor() || !_initialized, \"Initializable: contract is already initialized\");\n\n        bool isTopLevelCall = !_initializing;\n        if (isTopLevelCall) {\n            _initializing = true;\n            _initialized = true;\n        }\n\n        _;\n\n        if (isTopLevelCall) {\n            _initializing = false;\n        }\n    }\n\n    /// @dev Returns true if and only if the function is running in the constructor\n    function _isConstructor() private view returns (bool) {\n        // extcodesize checks the size of the code stored in an address, and\n        // address returns the current address. Since the code is still not\n        // deployed when running a constructor, any checks on its code size will\n        // yield zero, making it an effective way to detect if a contract is\n        // under construction or not.\n        address self = address(this);\n        uint256 cs;\n        // solhint-disable-next-line no-inline-assembly\n        assembly { cs := extcodesize(self) }\n        return cs == 0;\n    }\n}\n",
-  "sourcePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/Initializable.sol",
+  "sourcePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/Initializable.sol",
   "ast": {
-    "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/Initializable.sol",
+    "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/Initializable.sol",
     "exportedSymbols": {
       "Initializable": [
         1176
@@ -272,10 +274,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        -18,
-                        -18
+                        4294967278,
+                        4294967278
                       ],
-                      "referencedDeclaration": -18,
+                      "referencedDeclaration": 4294967278,
                       "src": "1442:7:6",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -626,7 +628,7 @@
                         "name": "this",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": -28,
+                        "referencedDeclaration": 4294967268,
                         "src": "2326:4:6",
                         "typeDescriptions": {
                           "typeIdentifier": "t_contract$_Initializable_$1176",
@@ -889,7 +891,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/Initializable.sol",
+      "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/Initializable.sol",
       "exportedSymbols": {
         "Initializable": [
           1176
@@ -1077,10 +1079,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                -18,
-                                -18
+                                4294967278,
+                                4294967278
                               ],
-                              "referencedDeclaration": -18,
+                              "referencedDeclaration": 4294967278,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -1671,7 +1673,7 @@
                               "overloadedDeclarations": [
                                 null
                               ],
-                              "referencedDeclaration": -28,
+                              "referencedDeclaration": 4294967268,
                               "type": "contract Initializable",
                               "value": "this"
                             },
@@ -1832,11 +1834,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.7.1+commit.f4a555be.Emscripten.clang"
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2020-12-23T19:45:18.198Z",
+  "updatedAt": "2021-02-20T02:10:13.069Z",
   "devdoc": {
     "details": "This is a base contract to aid in writing upgradeable contracts, or any kind of contract that will be deployed behind a proxy. Since a proxied contract can't have a constructor, it's common to move constructor logic to an external initializer function, usually called `initialize`. It then becomes necessary to protect this initializer function so it can only be called once. The {initializer} modifier provided by this contract will have this effect.  TIP: To avoid leaving the proxy in an uninitialized state, the initializer function should be called as early as possible by providing the encoded function call as the `_data` argument to {UpgradeableProxy-constructor}.  CAUTION: When used with inheritance, manual care must be taken to not invoke a parent initializer twice, or to ensure that all initializers are idempotent. This is not verified automatically as constructors are by Solidity.",
     "kind": "dev",

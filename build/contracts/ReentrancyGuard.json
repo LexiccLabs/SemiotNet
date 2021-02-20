@@ -7,16 +7,18 @@
       "type": "constructor"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.1+commit.f4a555be\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"details\":\"Contract module that helps prevent reentrant calls to a function. Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier available, which can be applied to functions to make sure there are no nested (reentrant) calls to them. Note that because there is a single `nonReentrant` guard, functions marked as `nonReentrant` may not call one another. This can be worked around by making those functions `private`, and then adding `external` `nonReentrant` entry points to them. TIP: If you would like to learn more about reentrancy and alternative ways to protect against it, check out our blog post https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\",\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/ReentrancyGuard.sol\":\"ReentrancyGuard\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/ReentrancyGuard.sol\":{\"keccak256\":\"0xf4c8486fcbe0a97e302f760eac535b371130dbf590c8de7941b38e05723cb8de\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://babfbf46000b8e008b9eef2dcdb4a5daa5d9e8547cbfc6c74518379b54370386\",\"dweb:/ipfs/QmURher4KMEgQd8jbGd2tYQamJV7tw2SSLb2WZzvw1t3dT\"]}},\"version\":1}",
-  "bytecode": "0x6080604052348015600f57600080fd5b506001600081905550603f8060256000396000f3fe6080604052600080fdfea26469706673582212206541cb32c4103a413f7e7f066f51429b537be2787a4d84f3811bb06b3e400ab064736f6c63430007010033",
-  "deployedBytecode": "0x6080604052600080fdfea26469706673582212206541cb32c4103a413f7e7f066f51429b537be2787a4d84f3811bb06b3e400ab064736f6c63430007010033",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"}],\"devdoc\":{\"details\":\"Contract module that helps prevent reentrant calls to a function. Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier available, which can be applied to functions to make sure there are no nested (reentrant) calls to them. Note that because there is a single `nonReentrant` guard, functions marked as `nonReentrant` may not call one another. This can be worked around by making those functions `private`, and then adding `external` `nonReentrant` entry points to them. TIP: If you would like to learn more about reentrancy and alternative ways to protect against it, check out our blog post https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\",\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/ReentrancyGuard.sol\":\"ReentrancyGuard\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/ReentrancyGuard.sol\":{\"keccak256\":\"0xf4c8486fcbe0a97e302f760eac535b371130dbf590c8de7941b38e05723cb8de\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://babfbf46000b8e008b9eef2dcdb4a5daa5d9e8547cbfc6c74518379b54370386\",\"dweb:/ipfs/QmURher4KMEgQd8jbGd2tYQamJV7tw2SSLb2WZzvw1t3dT\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b506001600081905550603f8060256000396000f3fe6080604052600080fdfea2646970667358221220df8b4c88ceb7122079e4a0140506a2d9a72e97207ad331f10338c41e3b1a87d064736f6c63430007060033",
+  "deployedBytecode": "0x6080604052600080fdfea2646970667358221220df8b4c88ceb7122079e4a0140506a2d9a72e97207ad331f10338c41e3b1a87d064736f6c63430007060033",
   "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
   "sourceMap": "854:1776:8:-:0;;;1754:54;;;;;;;;;;1673:1;1779:7;:22;;;;854:1776;;;;;;",
   "deployedSourceMap": "854:1776:8:-:0;;;;;",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.6.0 <0.8.0;\npragma experimental ABIEncoderV2;\n\n/**\n * @dev Contract module that helps prevent reentrant calls to a function.\n *\n * Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier\n * available, which can be applied to functions to make sure there are no nested\n * (reentrant) calls to them.\n *\n * Note that because there is a single `nonReentrant` guard, functions marked as\n * `nonReentrant` may not call one another. This can be worked around by making\n * those functions `private`, and then adding `external` `nonReentrant` entry\n * points to them.\n *\n * TIP: If you would like to learn more about reentrancy and alternative ways\n * to protect against it, check out our blog post\n * https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].\n */\n \n contract ReentrancyGuard {\n    // Booleans are more expensive than uint256 or any type that takes up a full\n    // word because each write operation emits an extra SLOAD to first read the\n    // slot's contents, replace the bits taken up by the boolean, and then write\n    // back. This is the compiler's defense against contract upgrades and\n    // pointer aliasing, and it cannot be disabled.\n\n    // The values being non-zero value makes deployment a bit more expensive,\n    // but in exchange the refund on every call to nonReentrant will be lower in\n    // amount. Since refunds are capped to a percentage of the total\n    // transaction's gas, it is best to keep them low in cases like this one, to\n    // increase the likelihood of the full refund coming into effect.\n    uint256 private constant _NOT_ENTERED = 1;\n    uint256 private constant _ENTERED = 2;\n\n    uint256 private _status;\n\n    constructor () {\n        _status = _NOT_ENTERED;\n    }\n\n    /**\n     * @dev Prevents a contract from calling itself, directly or indirectly.\n     * Calling a `nonReentrant` function from another `nonReentrant`\n     * function is not supported. It is possible to prevent this from happening\n     * by making the `nonReentrant` function external, and make it call a\n     * `private` function that does the actual work.\n     */\n    modifier nonReentrant() {\n        // On the first call to nonReentrant, _notEntered will be true\n        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n\n        // Any calls to nonReentrant after this point will fail\n        _status = _ENTERED;\n\n        _;\n\n        // By storing the original value once again, a refund is triggered (see\n        // https://eips.ethereum.org/EIPS/eip-2200)\n        _status = _NOT_ENTERED;\n    }\n}\n",
-  "sourcePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/ReentrancyGuard.sol",
+  "sourcePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/ReentrancyGuard.sol",
   "ast": {
-    "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/ReentrancyGuard.sol",
+    "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/ReentrancyGuard.sol",
     "exportedSymbols": {
       "ReentrancyGuard": [
         1327
@@ -336,10 +338,10 @@
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
-                        -18,
-                        -18
+                        4294967278,
+                        4294967278
                       ],
-                      "referencedDeclaration": -18,
+                      "referencedDeclaration": 4294967278,
                       "src": "2288:7:8",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
@@ -486,7 +488,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/ReentrancyGuard.sol",
+      "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/ReentrancyGuard.sol",
       "exportedSymbols": {
         "ReentrancyGuard": [
           1327
@@ -811,10 +813,10 @@
                                 }
                               ],
                               "overloadedDeclarations": [
-                                -18,
-                                -18
+                                4294967278,
+                                4294967278
                               ],
-                              "referencedDeclaration": -18,
+                              "referencedDeclaration": 4294967278,
                               "type": "function (bool,string memory) pure",
                               "value": "require"
                             },
@@ -1015,11 +1017,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.7.1+commit.f4a555be.Emscripten.clang"
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2020-12-23T19:45:18.205Z",
+  "updatedAt": "2021-02-20T02:10:13.080Z",
   "devdoc": {
     "details": "Contract module that helps prevent reentrant calls to a function. Inheriting from `ReentrancyGuard` will make the {nonReentrant} modifier available, which can be applied to functions to make sure there are no nested (reentrant) calls to them. Note that because there is a single `nonReentrant` guard, functions marked as `nonReentrant` may not call one another. This can be worked around by making those functions `private`, and then adding `external` `nonReentrant` entry points to them. TIP: If you would like to learn more about reentrancy and alternative ways to protect against it, check out our blog post https://blog.openzeppelin.com/reentrancy-after-istanbul/[Reentrancy After Istanbul].",
     "kind": "dev",

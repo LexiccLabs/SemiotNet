@@ -39,16 +39,18 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.7.1+commit.f4a555be\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestRandomness\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getRandomness\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/IBeaconContract.sol\":\"IBeaconContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/IBeaconContract.sol\":{\"keccak256\":\"0xbc6eb73a93b380cd9eefeeac080c4d3afd7e3493a0362ed66e3d7e6d0663d3e9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba7f7d7fcf8f66164e224f21ee6b35d83cc6a115a80b90f7534487999ca3a7f8\",\"dweb:/ipfs/QmRTHFJYuTamNmeozdu2uKTrPiog6wCq7iNohWaPMk4D9g\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.7.6+commit.7338295f\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getLatestRandomness\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"blockNumber\",\"type\":\"uint256\"}],\"name\":\"getRandomness\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":\"IBeaconContract\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol\":{\"keccak256\":\"0xbc6eb73a93b380cd9eefeeac080c4d3afd7e3493a0362ed66e3d7e6d0663d3e9\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ba7f7d7fcf8f66164e224f21ee6b35d83cc6a115a80b90f7534487999ca3a7f8\",\"dweb:/ipfs/QmRTHFJYuTamNmeozdu2uKTrPiog6wCq7iNohWaPMk4D9g\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
+  "generatedSources": [],
+  "deployedGeneratedSources": [],
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.6.0 <0.8.0;\npragma experimental ABIEncoderV2;\n\ninterface IBeaconContract {\n    /*\n      If there is a randomness that was calculated based on blockNumber, returns it.\n      Otherwise, returns 0.\n    */\n    function getRandomness(uint256 blockNumber) external view returns (bytes32);\n\n    /*\n      Returns the latest pair of (blockNumber, randomness) that was registered.\n    */\n    function getLatestRandomness() external view returns (uint256, bytes32);\n}\n",
-  "sourcePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/IBeaconContract.sol",
+  "sourcePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
   "ast": {
-    "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/IBeaconContract.sol",
+    "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
     "exportedSymbols": {
       "IBeaconContract": [
         842
@@ -262,7 +264,7 @@
   },
   "legacyAST": {
     "attributes": {
-      "absolutePath": "/Users/gokulalex/Apps/eth_apps/Bismuth/contracts/IBeaconContract.sol",
+      "absolutePath": "/Users/gokulalex/Apps/bsc_apps/SemiotNet/contracts/IBeaconContract.sol",
       "exportedSymbols": {
         "IBeaconContract": [
           842
@@ -506,11 +508,11 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.7.1+commit.f4a555be.Emscripten.clang"
+    "version": "0.7.6+commit.7338295f.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.3",
-  "updatedAt": "2020-12-23T19:45:18.193Z",
+  "updatedAt": "2021-02-20T02:10:13.050Z",
   "devdoc": {
     "kind": "dev",
     "methods": {},
