@@ -15,7 +15,6 @@ pragma experimental ABIEncoderV2;
 import "./Ownable.sol";
 import "./BancorFormula.sol";
 import './SafeMath.sol';
-
 import "./SemiottToken.sol";
 
 
@@ -23,7 +22,7 @@ contract SemiottCurve is Ownable, BancorFormula {
 
   using SafeMath for uint256;
 
-  SemiottToken public ssmToken;
+  SemiottToken public mToken;
 
   struct Holder {
     address   holder;   // holder address
