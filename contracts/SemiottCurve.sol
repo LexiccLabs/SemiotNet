@@ -53,7 +53,7 @@ contract SemiottCurve is Ownable, BancorFormula {
   constructor(address _tokenAddress) public {
       require(_tokenAddress != address(0));
       // instantiate deployed Ocean token contract
-      mToken = Token(_tokenAddress);
+      mToken = SemiottToken(_tokenAddress);
       // initial available supply of bonded token
       supply = 100;
       // inital price for bonded token
