@@ -8,8 +8,6 @@ import "./Initializable.sol";
 import "./SafeMath.sol";
 import "./Context.sol";
 
-import "./SemiottCurve.sol";
-
 /**
  * @title SemiottCoin
  * @dev this contract is a Pausable ERC20 token with Burn and Mint
@@ -23,7 +21,7 @@ import "./SemiottCurve.sol";
  * with insufficient funds since no tokens will be issued there.
  */
  
-contract SemiottCoin is Initializable, ReentrancyGuard, Context, SemiottCurve  {
+contract SemiottCoin is Initializable, ReentrancyGuard, Context  {
 
 
     using SafeMath for uint256;
