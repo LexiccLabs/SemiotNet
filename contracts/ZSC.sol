@@ -2,7 +2,7 @@
 pragma solidity ^0.7.0;
 pragma experimental ABIEncoderV2;
 
-import "./CashToken.sol";
+import "./SemiottToken.sol";
 import "./Utils.sol";
 import "./InnerProductVerifier.sol";
 import "./ZetherVerifier.sol";
