@@ -24,7 +24,8 @@ import "./SemiottCurve.sol";
  * Any call to transfer against this contract should fail
  * with insufficient funds since no tokens will be issued there.
  */
-contract SemiottCoin is Initializable, ReentrancyGuard, Context  {
+ 
+contract SemiottCoin is Initializable, ReentrancyGuard, Context, SemiottStream, SemiottCurve  {
 
 
     using SafeMath for uint256;
