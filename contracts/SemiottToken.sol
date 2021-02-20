@@ -7,10 +7,10 @@ import "./Context.sol";
 import "./IERC20.sol";
 import "./SafeMath.sol";
 import "./Address.sol";
+import "./ReentrancyGuard.sol";
 import "./mimc7.sol";
 
-
-contract SemiottToken is Context, IERC20 {
+contract SemiottToken is Context, IERC20, ReentrancyGuard {
     using SafeMath for uint256;
     using Address for address;
 
