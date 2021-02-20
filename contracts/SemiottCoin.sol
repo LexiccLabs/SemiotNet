@@ -6,6 +6,7 @@ pragma experimental ABIEncoderV2;
 import "./ReentrancyGuard.sol";
 import "./Initializable.sol";
 import "./SafeMath.sol";
+import "./Context.sol";
 
 import "./SemiottVerifier.sol";
 
@@ -22,7 +23,7 @@ import "./SemiottVerifier.sol";
  * Any call to transfer against this contract should fail
  * with insufficient funds since no tokens will be issued there.
  */
-contract SemiottCoin is Initializable, ReentrancyGuard  {
+contract SemiottCoin is Initializable, ReentrancyGuard, Context  {
 
 
     using SafeMath for uint256;
