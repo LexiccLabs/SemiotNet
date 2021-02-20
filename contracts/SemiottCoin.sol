@@ -9,8 +9,6 @@ import "./SafeMath.sol";
 import "./Context.sol";
 
 import "./SemiottStream.sol";
-import "./SemiottCurve.sol";
-
 
 /**
  * @title SemiottCoin
@@ -25,7 +23,7 @@ import "./SemiottCurve.sol";
  * with insufficient funds since no tokens will be issued there.
  */
  
-contract SemiottCoin is Initializable, ReentrancyGuard, Context, SemiottStream, SemiottCurve  {
+contract SemiottCoin is Initializable, ReentrancyGuard, Context, SemiottStream  {
 
 
     using SafeMath for uint256;
